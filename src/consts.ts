@@ -1,7 +1,7 @@
 
 /* CONSTS */
 
-const KEYWORD = '__ajv_filter__';
+const KEYWORD = '_ajvf';
 
 /* EXPORT */
 
