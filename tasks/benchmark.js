@@ -10,27 +10,31 @@ const {default: Filter} = require ( '../dist' ),
 
 benchmark.defaultOptions.log = 'compact';
 
-benchmark ({
-  name: 'filter:patch:ajv',
-  iterations: 50,
-  beforeEach: ctx => {
-    ctx.ajv = new AJV ();
-  },
-  fn: ctx => {
-    Filter.patchInstance ( ctx.ajv );
-  }
+benchmark.group ( 'patch', () => {
+
+  benchmark ({
+    name: 'ajv',
+    iterations: 50,
+    beforeEach: ctx => {
+      ctx.ajv = new AJV ();
+    },
+    fn: ctx => {
+      Filter.patchInstance ( ctx.ajv );
+    }
+  });
+
+  benchmark ({
+    name: 'schema',
+    iterations: 20000,
+    fn: () => {
+      Filter.patchSchema ( Mocks.schema );
+    }
+  });
+
 });
 
 benchmark ({
-  name: 'filter:patch:schema',
-  iterations: 20000,
-  fn: () => {
-    Filter.patchSchema ( Mocks.schema );
-  }
-});
-
-benchmark ({
-  name: 'filter:validate',
+  name: 'validate',
   iterations: 100000,
   before: ctx => {
     ctx.ajv = Filter.patchInstance ( new AJV () );
@@ -41,3 +45,5 @@ benchmark ({
     ctx.validator ( Mocks.data );
   }
 });
+
+benchmark.summary ();
