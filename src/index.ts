@@ -21,7 +21,6 @@ const Filter = {
         if ( !it.level ) {
 
           return 'function isPO(x){return typeof x==="object"&&x!==null&&!Array.isArray(x)}' +
-                 'function isEmpty(x){for(var k in x){return false}return true}' +
                  'function hasReqErr(i,lvl){' +
                    'for(;i < errors;i++){' +
                      'var e=vErrors[i];' +
@@ -44,7 +43,7 @@ const Filter = {
                 DELETE = setToUndefined ? `${TARGET_GETTER}=undefined;` : `delete ${TARGET_GETTER};`;
 
           return `var _=${TARGET_GETTER};` +
-                 `if((errors>errs_${DATA_LEVEL}&&(!isPO(_)||hasReqErr(errs_${DATA_LEVEL},${SCHEMA_PROPERTIES_NR}))||(errors<=errs_${DATA_LEVEL}&&isPO(_)&&isEmpty(_)))) ${DELETE}` +
+                 `if(errors>errs_${DATA_LEVEL}&&(!isPO(_)||hasReqErr(errs_${DATA_LEVEL},${SCHEMA_PROPERTIES_NR}))) ${DELETE}` +
                  `valid${LEVEL}=true;`
 
         }

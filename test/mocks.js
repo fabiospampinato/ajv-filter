@@ -71,6 +71,26 @@ const Mocks = {
             }
           },
           required: ['foo']
+        },
+        arr: {
+          type: 'array',
+          items: {
+            type: 'number'
+          }
+        },
+        arrNr: {
+          type: 'array',
+          items: {
+            type: 'number'
+          }
+        },
+        patterns: {
+          type: 'object',
+          patternProperties: {
+            '^[a-zA-Z0-9:]+$': {
+              type: 'string'
+            }
+          }
         }
       },
       required: ['root']
@@ -93,7 +113,10 @@ const Mocks = {
       qux2: {
         foo: 'string',
         bar: {}
-      }
+      },
+      // arr: {}, //FIXME
+      arrNr: [123],
+      patterns: {}
     };
   },
   get dataExpected () {
@@ -103,9 +126,12 @@ const Mocks = {
         foo: 'string'
       },
       bar: [123],
+      baz: {},
       qux2: {
         foo: 'string'
-      }
+      },
+      arrNr: [123],
+      patterns: {}
     };
   }
 };
